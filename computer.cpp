@@ -107,9 +107,13 @@ public:
 
 
 int main(){
+    string name;
+    cin>>"Please enter your name:">>name;
     man lin("peter");
     double mon=23650,yearend=2,rate=0.08;
-    cin>>mon>>yearend>>rate;
+    cin>>"Please enter your salary(CNY/month  e.g. 10000):">>mon;
+    cin>>"Please enter your Year-end awards(months/year  e.g. 2):">>yearend;
+    cin>>"Please enter your average salary increase rate(%  e.g. 10):">>rate;
     lin.computeSavings(mon,yearend,rate);
     lin.printData();
     cout<<endl;cout<<endl;cout<<endl;
