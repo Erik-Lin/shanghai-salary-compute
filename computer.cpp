@@ -108,12 +108,12 @@ public:
 
 int main(){
     string name;
-    cin>>"Please enter your name:">>name;
-    man lin("peter");
+    cout<<"Please enter your name:";cin>>name;
+    man lin(name);
     double mon=23650,yearend=2,rate=0.08;
-    cin>>"Please enter your salary(CNY/month  e.g. 10000):">>mon;
-    cin>>"Please enter your Year-end awards(months/year  e.g. 2):">>yearend;
-    cin>>"Please enter your average salary increase rate(%  e.g. 10):">>rate;
+    cout<<"Please enter your salary(CNY/month  e.g. 10000):";cin>>mon;
+    cout<<"Please enter your Year-end awards(months/year  e.g. 2):";cin>>yearend;
+    cout<<"Please enter your average salary increase rate(%  e.g. 10):";cin>>rate;rate/=100;
     lin.computeSavings(mon,yearend,rate);
     lin.printData();
     cout<<endl;cout<<endl;cout<<endl;
