@@ -11,6 +11,8 @@ private:
     double monSalary;    //税后底薪
     double yearEnd;     //年终奖
     double rate;        //调薪幅度
+    int yearEndMonth;   //平均年终奖月份
+    double cost; //平均每个月的生活费
     double yanglao;
     double yiliao;
     double shiye;
@@ -18,7 +20,6 @@ private:
     double gerensuodeshui;
     double salaryRate;
     double susuankouchushu;
-    int yearEndMonth;   //平均年终奖月份
     vector<double> saving = vector<double>(20);
 public:
     man(string name){
@@ -70,36 +71,36 @@ public:
     void setrate(double rate){
         this->rate = rate;
     }
-    void computeSavings(double salary,double months,double rate){
+    void computeSavings(double salary,double months,double rate,double cost){
         setMonSalary(salary);
         setrate(rate);
         computeYearEnd(months);
-        this->saving[0] = this->monSalary*12 + yearEnd;
+        this->saving[0] = this->monSalary*12 + yearEnd - cost*12;
         vector<double> salarys = vector<double>(20);
         salarys[0]=this->saving[0];
         for(int i=1;i<salarys.size();i++){
             salarys[i] = salarys[i-1]*(1+this->rate);
         }
         for(int i=1;i<saving.size();i++){
-            this->saving[i] = this->saving[i-1] + salarys[i];
+            this->saving[i] = this->saving[i-1] + salarys[i] - cost*12;
         }
     }
     void printData(){
-        cout<<"姓名：\t"<< this->name <<endl;
-        cout<<"税前月薪：\t"<< this->salary <<"元"<<endl;
-        cout<<"税后月薪：\t"<< this->monSalary <<"元"<<endl;
-        cout<<"税后年终奖：\t"<< this->yearEnd <<"元"<<endl;
-        cout<<"医疗保险：\t"<< this->yiliao <<"元"<<endl;
-        cout<<"养老保险：\t"<< this->yanglao <<"元"<<endl;
-        cout<<"公积金：\t"<< this->gongjijin <<"元"<<endl;
-        cout<<"失业保险：\t"<< this->shiye <<"元"<<endl;
-        cout<<"个人所得税：\t"<< this->gerensuodeshui <<"元"<<endl;
-        cout<<"个税缴纳税率：\t"<< this->salaryRate*100 <<"%" <<endl;
-        cout<<"速算扣除数：\t"<< this->susuankouchushu <<"元"<<endl;
-        cout<<"平均调薪比率：\t"<< this->rate*100 <<"%"<<endl;
+        cout<<right<<"姓名："<< this->name <<endl;
+        cout<<right<<"税前月薪："<< this->salary <<"元"<<endl;
+        cout<<right<<"税后月薪："<< this->monSalary <<"元"<<endl;
+        cout<<right<<"税后年终奖："<< this->yearEnd <<"元"<<endl;
+        cout<<right<<"医疗保险："<< this->yiliao <<"元"<<endl;
+        cout<<right<<"养老保险："<< this->yanglao <<"元"<<endl;
+        cout<<right<<"公积金："<< this->gongjijin <<"元"<<endl;
+        cout<<right<<"失业保险："<< this->shiye <<"元"<<endl;
+        cout<<right<<"个人所得税："<< this->gerensuodeshui <<"元"<<endl;
+        cout<<right<<"个税缴纳税率："<< this->salaryRate*100 <<"%" <<endl;
+        cout<<right<<"速算扣除数："<< this->susuankouchushu <<"元"<<endl;
+        cout<<right<<"平均调薪比率："<< this->rate*100 <<"%"<<endl;
 
         for(int i=0;i<this->saving.size();i++){
-            cout<<"第"<<i+1<<"\t年，不吃不喝不消费，到手积蓄预计为：\t"<< fixed <<setprecision(2)<<this->saving[i]/10000<<"万元"<<endl;
+            cout<<right<<"第"<<i+1<<"年的积蓄预计为："<< fixed <<setprecision(2)<<this->saving[i]/10000<<"万元"<<endl;
         }
     }
 };
@@ -110,13 +111,12 @@ int main(){
     string name;
     cout<<"Please enter your name:";cin>>name;
     man lin(name);
-    double mon=23650,yearend=2,rate=0.08;
+    double mon=23650,yearend=2,rate=0.08,cost = 0;
     cout<<"Please enter your salary(CNY/month  e.g. 10000):";cin>>mon;
     cout<<"Please enter your Year-end awards(months/year  e.g. 2):";cin>>yearend;
     cout<<"Please enter your average salary increase rate(%  e.g. 10):";cin>>rate;rate/=100;
-    lin.computeSavings(mon,yearend,rate);
+    cout<<"Please enter your average living cost(CNY/month  e.g. 5000):";cin>>cost;
+    lin.computeSavings(mon,yearend,rate,cost);
     lin.printData();
-    cout<<endl;cout<<endl;cout<<endl;
-
     return 0;
 }
